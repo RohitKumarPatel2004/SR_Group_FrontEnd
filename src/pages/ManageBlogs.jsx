@@ -1,66 +1,73 @@
 import { useEffect, useState } from "react";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
-
+import { BASE_URL } from "../baseurl";
 
 export default function ManageBlogs() {
   const [blogs, setBlogs] = useState([]);
   const [editingSlug, setEditingSlug] = useState(null);
   const [form, setForm] = useState({ title: "", content: "", image: null });
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const MAX_SIZE = 500 * 1024; // 500KB
+  const MIN_SIZE = 10 * 1024;  // 10KB
+  const ALLOWED_FORMATS = ["image/jpeg", "image/png", "image/jpg"];
 
   // Fetch blogs from server
   const fetchBlogs = async () => {
-    const res = await fetch(`${BASE_URL}`);
-    const data = await res.json();
-    setBlogs(data);
+    try {
+      const res = await fetch(`${BASE_URL}`);
+      const data = await res.json();
+      setBlogs(data);
+    } catch (err) {
+      setMessage("❌ Failed to fetch blogs");
+    }
   };
 
   useEffect(() => {
     fetchBlogs();
   }, []);
 
-  // Handle form input changes
+  // Handle input change
   const handleChange = (e) => {
-    if (e.target.name === "image") {
-      setForm({ ...form, image: e.target.files[0] });
+    const { name, value, files } = e.target;
+
+    if (name === "image" && files.length > 0) {
+      const file = files[0];
+
+      if (!ALLOWED_FORMATS.includes(file.type)) {
+        setError("❌ Only JPG, JPEG, and PNG formats are allowed.");
+        setForm({ ...form, image: null });
+        return;
+      }
+
+      if (file.size > MAX_SIZE) {
+        setError("❌ Image must be less than 500KB.");
+        setForm({ ...form, image: null });
+        return;
+      }
+
+      if (file.size < MIN_SIZE) {
+        setError("❌ Image must be at least 10KB.");
+        setForm({ ...form, image: null });
+        return;
+      }
+
+      setError("");
+      setForm({ ...form, image: file });
     } else {
-      setForm({ ...form, [e.target.name]: e.target.value });
+      setForm({ ...form, [name]: value });
     }
   };
 
-  // Handle delete (by slug)
-  const handleDelete = async (slug) => {
-    const confirm = window.confirm("Are you sure you want to delete this blog?");
-    if (!confirm) return;
-
-    const res = await fetch(`${BASE_URL}/${slug}`, {
-      method: "DELETE",
-    });
-
-    const data = await res.json();
-    setMessage("🗑️ " + data.message);
-    fetchBlogs();
-  };
-
-  // Handle edit
-  const handleEdit = (blog) => {
-    setEditingSlug(blog.slug);
-    setForm({
-      title: blog.title,
-      content: blog.content,
-      image: blog.image, // filename
-    });
-    setMessage("");
-  };
-
-  // Handle submit (add or update)
+  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+    setError("");
 
     const url = editingSlug
       ? `${BASE_URL}/${editingSlug}`
       : `${BASE_URL}/upload`;
-
     const method = editingSlug ? "PUT" : "POST";
 
     const formData = new FormData();
@@ -71,22 +78,53 @@ export default function ManageBlogs() {
       formData.append("image", form.image);
     }
 
-    const res = await fetch(url, {
-      method,
-      body: formData,
-    });
+    try {
+      const res = await fetch(url, {
+        method,
+        body: formData,
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      setMessage("❌ " + (data.error || "Something went wrong"));
-      return;
+      if (!res.ok) {
+        setError("❌ " + (data.error || "Something went wrong"));
+        return;
+      }
+
+      setMessage(editingSlug ? "✏️ Blog updated!" : "✅ Blog added!");
+      setForm({ title: "", content: "", image: null });
+      setEditingSlug(null);
+      fetchBlogs();
+    } catch (err) {
+      setError("❌ Submission failed. Please try again.");
     }
+  };
 
-    setMessage(editingSlug ? "✏️ Blog updated!" : "✅ Blog added!");
-    setForm({ title: "", content: "", image: null });
-    setEditingSlug(null);
-    fetchBlogs();
+  const handleEdit = (blog) => {
+    setEditingSlug(blog.slug);
+    setForm({
+      title: blog.title,
+      content: blog.content,
+      image: blog.image,
+    });
+    setMessage("");
+    setError("");
+  };
+
+  const handleDelete = async (slug) => {
+    const confirm = window.confirm("Are you sure you want to delete this blog?");
+    if (!confirm) return;
+
+    try {
+      const res = await fetch(`${BASE_URL}/${slug}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      setMessage("🗑️ " + data.message);
+      fetchBlogs();
+    } catch (err) {
+      setError("❌ Failed to delete blog");
+    }
   };
 
   return (
@@ -96,8 +134,14 @@ export default function ManageBlogs() {
       </h1>
 
       {message && (
-        <div className="text-center text-lg font-semibold text-[#145A32] mb-4">
+        <div className="text-center text-lg font-semibold text-green-700 mb-4">
           {message}
+        </div>
+      )}
+
+      {error && (
+        <div className="text-center text-lg font-semibold text-red-600 mb-4">
+          {error}
         </div>
       )}
 
@@ -147,6 +191,14 @@ export default function ManageBlogs() {
           />
         )}
 
+        {form.image && typeof form.image === "string" && (
+          <img
+            src={form.image}
+            alt="Existing"
+            className="w-full h-48 object-cover mb-4 rounded-xl"
+          />
+        )}
+
         <button
           type="submit"
           className="bg-[#145A32] text-white px-6 py-2 rounded-xl hover:bg-[#FF9800] transition-all duration-300"
@@ -170,7 +222,7 @@ export default function ManageBlogs() {
 
             {blog.image && (
               <img
-                src={`${IMAGE_URL}/${blog.image}`}
+                src={blog.image}
                 alt="Blog"
                 className="mb-3 rounded-xl w-full h-48 object-cover"
               />

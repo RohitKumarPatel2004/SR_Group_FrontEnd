@@ -54,7 +54,7 @@ const ManageClientReviews = () => {
     <div className="p-4 border rounded shadow bg-white flex flex-col gap-2">
       <div className="flex items-center gap-4">
         <img
-          src={`${IMAGE_URL}/${review.image}`}
+          src={review.image}
           alt={review.name}
           className="w-16 h-16 rounded-full object-cover border"
         />

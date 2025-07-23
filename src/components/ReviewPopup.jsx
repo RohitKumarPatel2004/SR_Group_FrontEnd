@@ -1,8 +1,7 @@
 // components/ReviewPopup.jsx
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BASE_URL } from '../baseurl';
-
 
 export default function ReviewPopup({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -14,19 +13,49 @@ export default function ReviewPopup({ isOpen, onClose }) {
   });
 
   const [error, setError] = useState("");
+  const [imageError, setImageError] = useState(""); // ✅ added image error state
   const [showThankYou, setShowThankYou] = useState(false);
+
+  const MAX_SIZE = 500 * 1024; // 500 KB
+  const MIN_SIZE = 10 * 1024;  // 10 KB
+  const ALLOWED_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
+
+    if (name === "image") {
+      const file = files[0];
+      if (!file) return;
+
+      // ✅ Validate image type
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        setImageError("❌ Only JPG, JPEG, and PNG files are allowed.");
+        return;
+      }
+
+      // ✅ Validate image size
+      if (file.size > MAX_SIZE) {
+        setImageError("❌ Image size must be less than 500KB.");
+        return;
+      }
+
+      if (file.size < MIN_SIZE) {
+        setImageError("❌ Image size must be at least 10KB.");
+        return;
+      }
+
+      setImageError(""); // ✅ Clear error if valid
+      setFormData((prev) => ({ ...prev, image: file }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (imageError) return; // Block submission if image invalid
 
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => data.append(key, value));
@@ -48,11 +77,12 @@ export default function ReviewPopup({ isOpen, onClose }) {
           description: "",
           image: null,
         });
+        setImageError("");
         onClose();
-        setShowThankYou(true); 
+        setShowThankYou(true);
 
         setTimeout(() => {
-          setShowThankYou(false); 
+          setShowThankYou(false);
         }, 3000);
       }
     } catch {
@@ -133,14 +163,19 @@ export default function ReviewPopup({ isOpen, onClose }) {
                   onChange={handleChange}
                   className="w-full border rounded-lg px-4 py-2 resize-none h-24"
                 />
-                <input
-                  name="image"
-                  type="file"
-                  accept="image/*"
-                  required
-                  onChange={handleChange}
-                  className="w-full"
-                />
+
+                <div>
+                  <input
+                    name="image"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="w-full"
+                  />
+                  {imageError && (
+                    <p className="text-red-600 text-sm mt-1">{imageError}</p>
+                  )}
+                </div>
 
                 <button
                   type="submit"

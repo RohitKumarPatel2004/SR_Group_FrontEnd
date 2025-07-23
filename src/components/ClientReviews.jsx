@@ -56,7 +56,7 @@ export default function ClientReviews() {
               <p className="text-gray-800 mb-6">{review.description}</p>
               <div className="flex items-center gap-4">
                 <img
-                  src={`${IMAGE_URL}/${review.image}`} 
+                  src={review.image}
                   alt={review.name}
                   className="w-12 h-12 rounded-full object-cover"
                 />

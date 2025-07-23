@@ -85,7 +85,7 @@ export default function PropertyList() {
             >
               <div className="relative overflow-hidden group">
                 <img
-                  src={`${IMAGE_URL}/${property.image}`}
+                  src={property.image}
                   alt={property.title}
                   className="w-full h-56 object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
