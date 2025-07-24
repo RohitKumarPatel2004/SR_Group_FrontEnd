@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
+import { BASE_URL } from '../baseurl';
 import axios from "axios";
 
 export default function Blog() {
@@ -27,7 +27,7 @@ export default function Blog() {
         className="relative w-full h-[70vh] overflow-hidden"
       >
         <img
-          src={`${IMAGE_URL}/${recentBlog.image}`}
+          src={recentBlog.image}
           alt={recentBlog.title}
           className="w-full h-full object-cover"
         />
@@ -63,7 +63,7 @@ export default function Blog() {
             >
               <div className="overflow-hidden h-52">
                 <img
-                  src={`${IMAGE_URL}/${blog.image}`}
+                  src={blog.image}
                   alt={blog.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />

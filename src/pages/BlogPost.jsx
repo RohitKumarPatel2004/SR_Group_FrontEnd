@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
+import { BASE_URL } from '../baseurl';
 import axios from "axios";
 
 export default function BlogPost() {
@@ -23,7 +23,7 @@ export default function BlogPost() {
   return (
     <section className="px-4 md:px-24 py-16 bg-white">
       <img
-        src={`${IMAGE_URL}/${post.image}`}
+        src={post.image}
         alt={post.title}
         className="w-full max-h-[400px] object-cover rounded-lg shadow"
       />

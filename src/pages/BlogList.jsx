@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
+import { BASE_URL } from '../baseurl';
 import axios from "axios";
 
 export default function BlogList() {
@@ -28,7 +28,7 @@ export default function BlogList() {
           >
             <div className="overflow-hidden h-52">
               <img
-                src={`${IMAGE_URL}/${blog.image}`}
+                src={blog.image}
                 alt={blog.title}
                 className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
               />
