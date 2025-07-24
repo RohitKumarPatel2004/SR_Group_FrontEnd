@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { BASE_URL } from '../baseurl';
+import LoadingButton from '../components/LoadingButton'; 
 
 import { useState } from "react";
 
@@ -10,11 +11,18 @@ export default function ContactUs() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setLoading(true); // ✅ Start loading
+ 
+    if (error) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch(`${BASE_URL}/support`, {
@@ -35,6 +43,9 @@ export default function ContactUs() {
       }
     } catch (err) {
       setError("Server error. Please try again later.");
+    }
+    finally {
+      setLoading(false); // ✅ Stop loading
     }
   };
 
@@ -132,15 +143,13 @@ export default function ContactUs() {
                 required
               ></textarea>
             </div>
-
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full bg-[#145A32] text-white py-3 rounded-full font-semibold text-lg shadow-md hover:bg-[#0e4024] transition"
-            >
-              Submit
-            </motion.button>
+ <LoadingButton
+                  type="submit"
+                  isLoading={loading}
+                  className="bg-[#145A32] text-white py-2 w-full rounded-lg hover:bg-[#0e4024]"
+                >
+                  Submit Review
+                </LoadingButton>
           </form>
         </motion.div>
       </div>

@@ -1,29 +1,27 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Popup from "../components/Popup";
+import LoadingButton from "../components/LoadingButton";
 import { BASE_URL, IMAGE_URL } from '../baseurl';
-
 
 export default function PropertyList() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [shownPrices, setShownPrices] = useState([]);
   const [selectedPropertyId, setSelectedPropertyId] = useState(null);
   const [properties, setProperties] = useState([]);
+  const [ctaLoading, setCtaLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // Fetch recent 3 properties from backend
   useEffect(() => {
     const fetchProperties = async () => {
       try {
         const res = await fetch(`${BASE_URL}/property/all`);
         const data = await res.json();
-
-        // Sort by created_at descending and take only top 3
         const sorted = data
           .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
           .slice(0, 3);
-
         setProperties(sorted);
       } catch (err) {
         console.error("Error fetching properties:", err);
@@ -44,6 +42,14 @@ export default function PropertyList() {
     }
     setPopupOpen(false);
     setSelectedPropertyId(null);
+  };
+
+  const handleViewAllClick = () => {
+    setCtaLoading(true);
+    setTimeout(() => {
+      setCtaLoading(false);
+      navigate("/property");
+    }, 800);
   };
 
   const cardVariants = {
@@ -148,13 +154,15 @@ export default function PropertyList() {
           ))}
         </div>
 
-        {/* CTA Button */}
+        {/* CTA Button with Spinner */}
         <div className="text-center mt-12">
-          <Link to="/property">
-            <button className="bg-[#145A32] text-white px-6 py-3 rounded hover:bg-green-800 transition">
-              View All Listings
-            </button>
-          </Link>
+          <LoadingButton
+            isLoading={ctaLoading}
+            onClick={handleViewAllClick}
+            className="bg-[#145A32] text-white px-6 py-3 rounded hover:bg-green-800 mx-auto"
+          >
+            View All Listings
+          </LoadingButton>
         </div>
 
         {/* Price Reveal Popup */}

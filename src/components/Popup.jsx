@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
-
+import { BASE_URL } from '../baseurl';
+import LoadingButton from "../components/LoadingButton"; // ✅ Ensure correct path
 
 export default function Popup({ isOpen, onClose }) {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // ✅ Loading state
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [gmail, setGmail] = useState("");
@@ -15,6 +16,7 @@ export default function Popup({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true); // ✅ Start loading
 
     try {
       const res = await fetch(`${BASE_URL}/support`, {
@@ -28,7 +30,6 @@ export default function Popup({ isOpen, onClose }) {
       if (!res.ok) {
         setError(data.error || "Something went wrong");
       } else {
-        // Reset fields
         setName("");
         setPhone("");
         setGmail("");
@@ -38,6 +39,8 @@ export default function Popup({ isOpen, onClose }) {
     } catch (err) {
       setError("Failed to connect to server");
     }
+
+    setIsLoading(false); // ✅ Stop loading
   };
 
   const handleClose = () => {
@@ -137,12 +140,14 @@ export default function Popup({ isOpen, onClose }) {
                 />
               </div>
 
-              <button
+              {/* ✅ LoadingButton integrated */}
+              <LoadingButton
+                isLoading={isLoading}
                 type="submit"
                 className="w-full bg-[#145A32] text-white py-2 rounded hover:bg-[#0e4024] transition font-semibold"
               >
                 Submit Review
-              </button>
+              </LoadingButton>
             </form>
           </>
         )}

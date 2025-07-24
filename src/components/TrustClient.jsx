@@ -7,8 +7,9 @@ import mem2 from '../assets/mem2.png';
 import mem3 from '../assets/mem3.png';
 import mem4 from '../assets/mem4.png';
 import Trust from '../assets/Trust.png';
-const memberImages = [mem1, mem2, mem3, mem4];
+import LoadingButton from '../components/LoadingButton'; // ✅ Make sure this path is correct
 
+const memberImages = [mem1, mem2, mem3, mem4];
 
 const reviews = [
   {
@@ -35,6 +36,7 @@ const reviews = [
 
 export default function TrustClient() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false); // ✅ Spinner state
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,10 +45,19 @@ export default function TrustClient() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleClick = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      window.location.href = "/contact-us";
+    }, 800);
+  };
+
   return (
-    <section className=" py-12 px-6 md:px-20">
+    <section className="py-12 px-6 md:px-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
 
+        {/* LEFT CONTENT */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -66,9 +77,14 @@ export default function TrustClient() {
             From apartments to plots, we simplify your real estate journey with expert support.
           </p>
 
-          <button onClick={() => window.location.href = "/contact-us"} className="bg-[#145A32] text-white text-lg font-semibold px-6 py-3 rounded-xl hover:bg-[#0e4024] transition">
+          {/* ✅ Updated button with spinner */}
+          <LoadingButton
+            isLoading={isLoading}
+            onClick={handleClick}
+            className="bg-[#145A32] text-white text-lg font-semibold px-6 py-3 rounded-xl hover:bg-[#0e4024] transition"
+          >
             Contact Us
-          </button>
+          </LoadingButton>
 
           {/* MEMBERS BLOCK */}
           <div className="mt-8 bg-white shadow-md p-4 rounded-xl flex items-center space-x-4 max-w-md">
@@ -105,7 +121,7 @@ export default function TrustClient() {
           <img
             src={Trust}
             alt="Real Estate Client"
-            className="w-full max-w-md mx-auto "
+            className="w-full max-w-md mx-auto"
           />
         </motion.div>
       </div>

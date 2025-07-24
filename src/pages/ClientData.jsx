@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { BASE_URL } from '../baseurl';
-
+import LoadingButton from '../components/LoadingButton'; // ✅ Import LoadingButton
 
 const ClientData = () => {
   const [clients, setClients] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+
+  // ✅ Loading states for each button
+  const [downloading, setDownloading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [toggling, setToggling] = useState(false);
 
   const fetchClients = () => {
     fetch(`${BASE_URL}/support/all`)
@@ -21,27 +26,37 @@ const ClientData = () => {
   }, []);
 
   const downloadExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(clients);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Clients');
+    setDownloading(true);
+    setTimeout(() => {
+      const worksheet = XLSX.utils.json_to_sheet(clients);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Clients');
 
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
-    });
+      const excelBuffer = XLSX.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
 
-    const file = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(file, 'ClientData.xlsx');
+      const file = new Blob([excelBuffer], { type: 'application/octet-stream' });
+      saveAs(file, 'ClientData.xlsx');
+
+      setDownloading(false);
+    }, 500); // simulate slight delay
   };
 
   const toggleSelectAll = () => {
-    if (selectAll) {
-      setSelectedIds([]);
-    } else {
-      const allIds = clients.map((client) => client.id);
-      setSelectedIds(allIds);
-    }
-    setSelectAll(!selectAll);
+    setToggling(true);
+
+    setTimeout(() => {
+      if (selectAll) {
+        setSelectedIds([]);
+      } else {
+        const allIds = clients.map((client) => client.id);
+        setSelectedIds(allIds);
+      }
+      setSelectAll(!selectAll);
+      setToggling(false);
+    }, 300); // simulate slight delay
   };
 
   const toggleCheckbox = (id) => {
@@ -58,10 +73,12 @@ const ClientData = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete selected clients?");
     if (!confirmDelete) return;
 
+    setDeleting(true);
+
     fetch(`${BASE_URL}/support/selected`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ids: selectedIds }), // send selected IDs
+      body: JSON.stringify({ ids: selectedIds }),
     })
       .then((res) => res.json())
       .then(() => {
@@ -73,6 +90,9 @@ const ClientData = () => {
       .catch((err) => {
         console.error("Error deleting clients:", err);
         alert("Failed to delete selected clients.");
+      })
+      .finally(() => {
+        setDeleting(false);
       });
   };
 
@@ -80,29 +100,32 @@ const ClientData = () => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Client Support Data</h2>
 
-      <div className="flex gap-4 mb-4">
-        <button
+      <div className="flex flex-wrap gap-4 mb-4">
+        <LoadingButton
+          isLoading={downloading}
           onClick={downloadExcel}
           className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
         >
           Download Excel
-        </button>
+        </LoadingButton>
 
         {selectedIds.length > 0 && (
-          <button
+          <LoadingButton
+            isLoading={deleting}
             onClick={deleteSelectedClients}
             className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
           >
             Delete Selected ({selectedIds.length})
-          </button>
+          </LoadingButton>
         )}
 
-        <button
+        <LoadingButton
+          isLoading={toggling}
           onClick={toggleSelectAll}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           {selectAll ? "Deselect All" : "Select All"}
-        </button>
+        </LoadingButton>
       </div>
 
       <div className="overflow-x-auto">

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BASE_URL } from '../baseurl';
+import LoadingButton from "./LoadingButton"; // ✅ Import your spinner button
 
 export default function ReviewPopup({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -13,8 +14,9 @@ export default function ReviewPopup({ isOpen, onClose }) {
   });
 
   const [error, setError] = useState("");
-  const [imageError, setImageError] = useState(""); // ✅ added image error state
+  const [imageError, setImageError] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
+  const [loading, setLoading] = useState(false); // ✅ Add loading state
 
   const MAX_SIZE = 500 * 1024; // 500 KB
   const MIN_SIZE = 10 * 1024;  // 10 KB
@@ -27,13 +29,11 @@ export default function ReviewPopup({ isOpen, onClose }) {
       const file = files[0];
       if (!file) return;
 
-      // ✅ Validate image type
       if (!ALLOWED_TYPES.includes(file.type)) {
         setImageError("❌ Only JPG, JPEG, and PNG files are allowed.");
         return;
       }
 
-      // ✅ Validate image size
       if (file.size > MAX_SIZE) {
         setImageError("❌ Image size must be less than 500KB.");
         return;
@@ -44,7 +44,7 @@ export default function ReviewPopup({ isOpen, onClose }) {
         return;
       }
 
-      setImageError(""); // ✅ Clear error if valid
+      setImageError("");
       setFormData((prev) => ({ ...prev, image: file }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -54,8 +54,12 @@ export default function ReviewPopup({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true); // ✅ Start loading
 
-    if (imageError) return; // Block submission if image invalid
+    if (imageError) {
+      setLoading(false);
+      return;
+    }
 
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => data.append(key, value));
@@ -80,13 +84,12 @@ export default function ReviewPopup({ isOpen, onClose }) {
         setImageError("");
         onClose();
         setShowThankYou(true);
-
-        setTimeout(() => {
-          setShowThankYou(false);
-        }, 3000);
+        setTimeout(() => setShowThankYou(false), 3000);
       }
     } catch {
       setError("Server error. Try again later.");
+    } finally {
+      setLoading(false); // ✅ Stop loading
     }
   };
 
@@ -177,12 +180,14 @@ export default function ReviewPopup({ isOpen, onClose }) {
                   )}
                 </div>
 
-                <button
+                {/* ✅ Use LoadingButton here */}
+                <LoadingButton
                   type="submit"
+                  isLoading={loading}
                   className="bg-[#145A32] text-white py-2 w-full rounded-lg hover:bg-[#0e4024]"
                 >
                   Submit Review
-                </button>
+                </LoadingButton>
               </form>
             </motion.div>
           </div>
