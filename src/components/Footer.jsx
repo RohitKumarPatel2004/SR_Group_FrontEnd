@@ -90,7 +90,7 @@ export default function Footer() {
           </ul>
           <div className="mt-4">
             <a
-              href="#"
+              href="/contact-us"
               className="inline-block bg-[#145A32] text-white text-sm px-4 py-2 rounded-full hover:bg-[#0e4024] transition"
             >
               Chat With Our Team →

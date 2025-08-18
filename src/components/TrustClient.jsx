@@ -7,7 +7,7 @@ import mem2 from '../assets/mem2.png';
 import mem3 from '../assets/mem3.png';
 import mem4 from '../assets/mem4.png';
 import Trust from '../assets/Trust.png';
-import LoadingButton from '../components/LoadingButton'; // ✅ Make sure this path is correct
+import LoadingButton from '../components/LoadingButton'; 
 
 const memberImages = [mem1, mem2, mem3, mem4];
 
