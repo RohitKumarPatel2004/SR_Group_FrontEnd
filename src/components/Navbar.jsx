@@ -27,7 +27,7 @@ export default function Navbar() {
             { name: "Blogs", path: "/blogs" },
             { name: "Properties", path: "/property" },
             { name: "About", path: "/about-us" },
-            { name: "Admin Dashboard", path: "/admin" },
+            // { name: "Admin Dashboard", path: "/admin" },
           ].map((item) => (
             <li key={item.name}>
               <NavLink
@@ -120,7 +120,7 @@ export default function Navbar() {
             >
               About
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/admin"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
@@ -130,7 +130,7 @@ export default function Navbar() {
               }
             >
               Admin Dashboard
-            </NavLink>
+            </NavLink> */}
             <button
               onClick={() => {
                 setReviewPopupOpen(true);
