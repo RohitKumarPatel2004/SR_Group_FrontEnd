@@ -132,7 +132,7 @@ export default function PropertyList() {
 
                   <div className="flex gap-2">
                     <a
-                      href="https://wa.me/919876543210"
+                      href="https://wa.me/919667546390"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full shadow-sm hover:shadow-lg transition"
@@ -141,7 +141,7 @@ export default function PropertyList() {
                       <FaWhatsapp size={16} />
                     </a>
                     <a
-                      href="tel:+919876543210"
+                      href="tel:+919667546390"
                       className="bg-[#145A32] hover:bg-green-800 text-white p-2 rounded-full shadow-sm hover:shadow-lg transition"
                       title="Call Us"
                     >

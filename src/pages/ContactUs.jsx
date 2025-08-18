@@ -160,7 +160,7 @@ export default function ContactUs() {
         <div className="grid gap-6 md:grid-cols-3">
           <div>
             <h4 className="font-semibold text-[#145A32] mb-2">📞 Phone</h4>
-            <p>+91 9876543210</p>
+            <p>+91 9667546390</p>
           </div>
           <div>
             <h4 className="font-semibold text-[#145A32] mb-2">📧 Email</h4>
