@@ -24,6 +24,7 @@ export default function AdminLogin() {
       const res = await axios.post(`${BASE_URL}/admin/login`, formData, {
         withCredentials: true,
       });
+      console.log(res);
 
       localStorage.setItem("admin", JSON.stringify(res.data.admin));
       setMessage("Login successful! Redirecting...");
