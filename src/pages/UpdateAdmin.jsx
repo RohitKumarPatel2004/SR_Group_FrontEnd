@@ -12,7 +12,7 @@ export default function UpdateAdmin() {
   useEffect(() => {
     const admin = localStorage.getItem("admin");
     if (!admin) {
-      window.location.href = "/login"; // not logged in → redirect
+      window.location.href = "/admin/login"; // not logged in → redirect
     }
   }, []);
 
@@ -41,7 +41,7 @@ export default function UpdateAdmin() {
 
       // Redirect after 3 seconds
       setTimeout(() => {
-        window.location.href = "/login"; // or "/admin" if you want admin dashboard
+        window.location.href = "/admin/login"; // or "/admin" if you want admin dashboard
       }, 3000);
     } catch (err) {
       setError(err.response?.data?.error || "Failed to update credentials");

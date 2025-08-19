@@ -1,16 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../baseurl";
 import {
   FaUsers,
   FaBlog,
   FaQuestionCircle,
   FaHome,
-  FaStar
+  FaStar,
+  FaSignOutAlt
 } from "react-icons/fa";
 
 const AdminDashboard = () => {
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${BASE_URL}/admin/logout`, {}, { withCredentials: true });
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+    localStorage.removeItem("admin");
+    window.location.href = "/login";
+  };
+
   return (
-    <div className="min-h-screen bg-white p-8">
+    <div className="min-h-screen bg-white p-8 relative">
+      {/* Logout Button */}
+      <button
+        onClick={handleLogout}
+        className="absolute top-6 right-6 flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+      >
+        <FaSignOutAlt />
+        Logout
+      </button>
+
       <header className="text-center mb-10">
         <h1 className="text-4xl font-bold text-green-600 mb-2">Admin Panel</h1>
         <p className="text-yellow-600 text-lg">
