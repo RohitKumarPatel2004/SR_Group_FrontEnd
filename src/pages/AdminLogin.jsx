@@ -1,14 +1,15 @@
-// src/pages/AdminLogin.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../baseurl";
-import LoadingButton from "../components/LoadingButton"; // ✅ use your custom button
+import LoadingButton from "../components/LoadingButton";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ eye icons
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // ✅ loading state
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ toggle state
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,7 +25,6 @@ export default function AdminLogin() {
       const res = await axios.post(`${BASE_URL}/admin/login`, formData, {
         withCredentials: true,
       });
-      console.log(res);
 
       localStorage.setItem("admin", JSON.stringify(res.data.admin));
       setMessage("Login successful! Redirecting...");
@@ -59,21 +59,27 @@ export default function AdminLogin() {
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-sm font-medium text-gray-700">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // ✅ toggle type
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
-              className="mt-1 w-full border border-gray-300 rounded-lg p-2"
+              className="mt-1 w-full border border-gray-300 rounded-lg p-2 pr-10"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-3/4 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
 
-          {/* ✅ Use LoadingButton */}
           <LoadingButton
             type="submit"
             isLoading={isLoading}

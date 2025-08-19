@@ -24,13 +24,19 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-white p-8 relative">
-      {/* Logout Button */}
+      {/* Responsive Logout Button */}
       <button
         onClick={handleLogout}
-        className="absolute top-6 right-6 flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+        className="
+          fixed md:absolute top-4 right-4 
+          flex items-center gap-2 
+          bg-red-600 text-white px-4 py-2 rounded-lg 
+          hover:bg-red-700 transition z-50
+          md:top-6 md:right-6
+        "
       >
-        <FaSignOutAlt />
-        Logout
+        <FaSignOutAlt className="text-lg" />
+        <span className="hidden sm:inline">Logout</span>
       </button>
 
       <header className="text-center mb-10">
