@@ -19,6 +19,7 @@ export default function ProtectedRoute({ children }) {
         }
       } catch (err) {
         setAuthorized(false);
+        // setAuthorized(true);
       } finally {
         setLoading(false);
       }

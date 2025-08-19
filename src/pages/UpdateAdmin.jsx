@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../baseurl";
-import LoadingButton from "../components/LoadingButton"; // ✅ use reusable button
+import LoadingButton from "../components/LoadingButton";
 
 export default function UpdateAdmin() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -30,28 +30,24 @@ export default function UpdateAdmin() {
       const res = await axios.put(`${BASE_URL}/admin/update/1`, formData, {
         withCredentials: true,
       });
+
+      // Show success message
       setMessage(res.data.message || "Updated successfully!");
       setFormData({ username: "", password: "" });
 
-      // ✅ force logout after update
+      // Clear admin data and logout behind the scenes
       localStorage.removeItem("admin");
       await axios.post(`${BASE_URL}/admin/logout`, {}, { withCredentials: true });
-      setTimeout(() => (window.location.href = "/login"), 1500);
+
+      // Redirect after 3 seconds
+      setTimeout(() => {
+        window.location.href = "/login"; // or "/admin" if you want admin dashboard
+      }, 3000);
     } catch (err) {
       setError(err.response?.data?.error || "Failed to update credentials");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(`${BASE_URL}/admin/logout`, {}, { withCredentials: true });
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-    localStorage.removeItem("admin");
-    window.location.href = "/login";
   };
 
   return (
@@ -93,7 +89,7 @@ export default function UpdateAdmin() {
             />
           </div>
 
-          {/* ✅ Replaced with LoadingButton */}
+          {/* Update button */}
           <LoadingButton
             type="submit"
             isLoading={loading}
@@ -102,14 +98,6 @@ export default function UpdateAdmin() {
             Update
           </LoadingButton>
         </form>
-
-        {/* ✅ Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="mt-6 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
-        >
-          Logout
-        </button>
       </div>
     </div>
   );
