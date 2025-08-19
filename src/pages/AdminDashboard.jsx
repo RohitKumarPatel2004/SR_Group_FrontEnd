@@ -19,7 +19,7 @@ const AdminDashboard = () => {
       console.error("Logout failed", err);
     }
     localStorage.removeItem("admin");
-    window.location.href = "/login";
+    window.location.href = "/admin/login";
   };
 
   return (
