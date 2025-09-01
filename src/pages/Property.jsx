@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import Popup from "../components/Popup";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
-
+import { BASE_URL, IMAGE_URL } from "../baseurl";
 
 export default function Property() {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -47,15 +46,28 @@ export default function Property() {
     setSelectedPropertyId(null);
   };
 
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(price);
+
   return (
     <section className="w-full py-16 px-4 bg-[#f9f9f9]">
       <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#145A32] mb-2">Land Properties for Sale</h1>
-          <p className="text-gray-700">Explore our land listings with all essential amenities</p>
+          <h1 className="text-4xl font-bold text-[#145A32] mb-2">
+            Land Properties for Sale
+          </h1>
+          <p className="text-gray-700">
+            Explore our land listings with all essential amenities
+          </p>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mt-3 rounded"></div>
         </div>
 
+        {/* Property Grid */}
         <div className="grid gap-8 md:grid-cols-3">
           {properties.map((property, index) => (
             <motion.div
@@ -67,10 +79,16 @@ export default function Property() {
               viewport={{ once: true }}
               custom={index}
             >
+              {/* Image Section */}
               <div className="relative overflow-hidden group">
                 <img
-                  src={property.image}
+                  src={
+                    property.image
+                      ? `${IMAGE_URL}/${property.image}`
+                      : "/placeholder.jpg"
+                  }
                   alt={property.title}
+                  loading="lazy"
                   className="w-full h-56 object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
                 <span className="absolute top-2 left-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded">
@@ -78,8 +96,11 @@ export default function Property() {
                 </span>
               </div>
 
+              {/* Details Section */}
               <div className="p-4 space-y-2">
-                <h3 className="font-semibold text-lg text-[#145A32]">{property.title}</h3>
+                <h3 className="font-semibold text-lg text-[#145A32]">
+                  {property.title}
+                </h3>
                 <p className="text-sm text-gray-600">📍 {property.location}</p>
 
                 <div className="text-sm text-gray-700 space-y-1">
@@ -95,12 +116,17 @@ export default function Property() {
                   <p>🏙️ Developed Area: {property.developed ? "Yes" : "No"}</p>
                 </div>
 
-                <p className="text-gray-600 text-sm mt-2">📝 {property.description}</p>
+                <p className="text-gray-600 text-sm mt-2">
+                  📝 {property.description}
+                </p>
 
+                {/* Price & Actions */}
                 <div className="mt-4 flex items-center justify-between">
                   {shownPrices.includes(property.id) ||
                   selectedPropertyId === property.id ? (
-                    <span className="text-[#145A32] font-bold">{property.price}</span>
+                    <span className="text-[#145A32] font-bold">
+                      {formatPrice(property.price)}
+                    </span>
                   ) : (
                     <button
                       onClick={() => handleOpenPopup(property.id)}
@@ -112,7 +138,7 @@ export default function Property() {
 
                   <div className="flex gap-2">
                     <a
-                      href="https://wa.me/917000000000"
+                      href={`https://wa.me/917000000000?text=Hi, I am interested in ${property.title}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full shadow-sm hover:shadow-lg transition"
@@ -134,6 +160,7 @@ export default function Property() {
           ))}
         </div>
 
+        {/* Price Request Popup */}
         <Popup isOpen={popupOpen} onClose={handleClosePopup} />
       </div>
     </section>
