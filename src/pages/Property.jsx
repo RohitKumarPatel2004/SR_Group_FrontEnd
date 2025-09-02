@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import Popup from "../components/Popup";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
-
+import { BASE_URL } from '../baseurl';
 
 export default function Property() {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -68,11 +67,23 @@ export default function Property() {
               custom={index}
             >
               <div className="relative overflow-hidden group">
-                <img
-                  src={property.image}
-                  alt={property.title}
-                  className="w-full h-56 object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
-                />
+                {property.image ? (
+                  <img
+                    src={property.image}
+                    alt={property.title}
+                    className="w-full h-56 object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
+                  />
+                ) : property.video ? (
+                  <video
+                    src={property.video}
+                    controls
+                    className="w-full h-56 object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-56 flex items-center justify-center bg-gray-200 text-gray-500">
+                    No Media
+                  </div>
+                )}
                 <span className="absolute top-2 left-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded">
                   For Sale
                 </span>
@@ -112,7 +123,7 @@ export default function Property() {
 
                   <div className="flex gap-2">
                     <a
-                      href="https://wa.me/917000000000"
+                      href="https://wa.me/919667546390"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full shadow-sm hover:shadow-lg transition"
@@ -121,7 +132,7 @@ export default function Property() {
                       <FaWhatsapp size={16} />
                     </a>
                     <a
-                      href="tel:+917000000000"
+                      href="tel:+919667546390"
                       className="bg-[#145A32] hover:bg-green-800 text-white p-2 rounded-full shadow-sm hover:shadow-lg transition"
                       title="Call Us"
                     >

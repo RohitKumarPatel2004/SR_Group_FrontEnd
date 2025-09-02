@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Popup from "../components/Popup";
 import LoadingButton from "../components/LoadingButton";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
+import { BASE_URL } from "../baseurl";
 
 export default function PropertyList() {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -71,9 +71,13 @@ export default function PropertyList() {
               <div className="w-6 h-6 bg-yellow-500 rounded absolute top-1 left-1 z-0"></div>
               <div className="w-4 h-4 bg-yellow-600 rounded absolute top-0 left-0 z-10 border border-white"></div>
             </div>
-            <h2 className="text-3xl font-semibold text-[#145A32]">Featured Properties</h2>
+            <h2 className="text-3xl font-semibold text-[#145A32]">
+              Featured Properties
+            </h2>
           </div>
-          <p className="text-black mt-2">Find Your Perfect Home with a Trusted Real Estate Agent</p>
+          <p className="text-black mt-2">
+            Find Your Perfect Home with a Trusted Real Estate Agent
+          </p>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mt-3 rounded"></div>
         </div>
 
@@ -90,18 +94,28 @@ export default function PropertyList() {
               custom={index}
             >
               <div className="relative overflow-hidden group">
-                <img
-                  src={property.image}
-                  alt={property.title}
-                  className="w-full h-56 object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
-                />
+                {property.video ? (
+                  <video
+                    src={property.video}
+                    controls
+                    className="w-full h-56 object-cover"
+                  />
+                ) : (
+                  <img
+                    src={property.image}
+                    alt={property.title}
+                    className="w-full h-56 object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
+                  />
+                )}
                 <span className="absolute top-2 left-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded">
                   For Sale
                 </span>
               </div>
 
               <div className="p-4 space-y-2">
-                <h3 className="font-semibold text-lg text-[#145A32]">{property.title}</h3>
+                <h3 className="font-semibold text-lg text-[#145A32]">
+                  {property.title}
+                </h3>
                 <p className="text-sm text-gray-600">📍 {property.location}</p>
 
                 <div className="text-sm text-gray-700 space-y-1">
@@ -115,12 +129,17 @@ export default function PropertyList() {
                   </p>
                   <p>🏫 School: {property.nearSchool}</p>
                   <p>🏙️ Developed: {property.developed ? "Yes" : "No"}</p>
-                  <p className="text-gray-600 text-sm mt-2">📝 {property.description}</p>
+                  <p className="text-gray-600 text-sm mt-2">
+                    📝 {property.description}
+                  </p>
                 </div>
 
                 <div className="mt-4 flex items-center justify-between">
-                  {shownPrices.includes(property.id) || selectedPropertyId === property.id ? (
-                    <span className="text-[#145A32] font-bold">{property.price}</span>
+                  {shownPrices.includes(property.id) ||
+                  selectedPropertyId === property.id ? (
+                    <span className="text-[#145A32] font-bold">
+                      {property.price}
+                    </span>
                   ) : (
                     <button
                       onClick={() => handleOpenPopup(property.id)}
@@ -164,8 +183,6 @@ export default function PropertyList() {
             View All Listings
           </LoadingButton>
         </div>
-
-        {/* Price Reveal Popup */}
         <Popup isOpen={popupOpen} onClose={handleClosePopup} />
       </div>
     </section>

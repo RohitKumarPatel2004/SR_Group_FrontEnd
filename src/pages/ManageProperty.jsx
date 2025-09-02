@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from '../baseurl';
+import LoadingButton from "../components/LoadingButton";
 
 const API = `${BASE_URL}/property`;
 
@@ -17,7 +18,7 @@ const fieldLabels = {
   developed: "Developed",
   description: "Description",
   price: "Price",
-  image: "Image",
+  image: "Image / Video",
 };
 
 const booleanFields = ["bijali", "pani", "sivar", "developed"];
@@ -33,6 +34,11 @@ const ManageProperty = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [imageError, setImageError] = useState("");
+  const [uploadType, setUploadType] = useState("image");
+
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(null);
+  const [editLoading, setEditLoading] = useState(null);
 
   useEffect(() => {
     fetchProperties();
@@ -65,23 +71,26 @@ const ManageProperty = () => {
 
   const handleChange = (e) => {
     const { name, type, checked, value, files } = e.target;
-
     if (type === "file") {
       const file = files[0];
-      if (!ALLOWED_FORMATS.includes(file.type)) {
-        setImageError("❌ Only JPG, JPEG, and PNG formats are allowed.");
-        return;
+      if (uploadType === "image") {
+        if (!ALLOWED_FORMATS.includes(file.type)) {
+          setImageError("❌ Only JPG, JPEG, and PNG formats are allowed.");
+          return;
+        }
+        if (file.size > MAX_SIZE) {
+          setImageError("❌ Image must be less than 500KB.");
+          return;
+        }
+        if (file.size < MIN_SIZE) {
+          setImageError("❌ Image must be at least 10KB.");
+          return;
+        }
+        setImageError("");
+        setFormData({ ...formData, image: file, video: null });
+      } else {
+        setFormData({ ...formData, video: file, image: null });
       }
-      if (file.size > MAX_SIZE) {
-        setImageError("❌ Image must be less than 500KB.");
-        return;
-      }
-      if (file.size < MIN_SIZE) {
-        setImageError("❌ Image must be at least 10KB.");
-        return;
-      }
-      setImageError(""); // clear if valid
-      setFormData({ ...formData, image: file });
     } else {
       setFormData({
         ...formData,
@@ -95,14 +104,17 @@ const ManageProperty = () => {
     setError("");
     setMessage("");
 
-    if (imageError) {
+    if (uploadType === "image" && imageError) {
       setError("❌ Fix image error before submitting.");
       return;
     }
 
+    setSubmitLoading(true);
     const data = new FormData();
     Object.entries(formData).forEach(([key, val]) => {
-      data.append(key, val);
+      if (val !== null && val !== undefined) {
+        data.append(key, val);
+      }
     });
 
     try {
@@ -120,26 +132,37 @@ const ManageProperty = () => {
     } catch (err) {
       const msg = err.response?.data?.error || "❌ Failed to save property.";
       setError(msg);
+    } finally {
+      setSubmitLoading(false);
     }
   };
 
   const handleEdit = (property) => {
-    setFormData(property);
-    setEditId(property.id);
-    setMessage("");
-    setError("");
-    setImageError("");
+    setEditLoading(property.id);
+    setTimeout(() => {
+      setFormData(property);
+      setEditId(property.id);
+      setMessage("");
+      setError("");
+      setImageError("");
+      setUploadType(property.video ? "video" : "image");
+      setEditLoading(null);
+    }, 600);
   };
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this property?");
     if (!confirmDelete) return;
+
+    setDeleteLoading(id);
     try {
       const res = await axios.delete(`${API}/${id}`);
       setMessage(res.data.message || "🗑️ Property deleted.");
       fetchProperties();
     } catch (err) {
       setError("❌ Failed to delete property.");
+    } finally {
+      setDeleteLoading(null);
     }
   };
 
@@ -210,28 +233,80 @@ const ManageProperty = () => {
                 />
               ) : field === "image" ? (
                 <>
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={handleChange}
-                    className="w-full border p-2 rounded"
-                  />
-                  {imageError && (
-                    <p className="text-red-600 text-sm mt-1">{imageError}</p>
-                  )}
-                  {formData.image && typeof formData.image === "object" && (
-                    <img
-                      src={URL.createObjectURL(formData.image)}
-                      alt="Preview"
-                      className="w-full h-32 object-cover mt-2 rounded"
-                    />
-                  )}
-                  {formData.image && typeof formData.image === "string" && (
-                    <img
-                      src={formData.image}
-                      alt="Existing"
-                      className="w-full h-32 object-cover mt-2 rounded"
-                    />
+                  <div className="flex gap-4 mb-2">
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="radio"
+                        name="uploadType"
+                        value="image"
+                        checked={uploadType === "image"}
+                        onChange={() => setUploadType("image")}
+                      />
+                      Image
+                    </label>
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="radio"
+                        name="uploadType"
+                        value="video"
+                        checked={uploadType === "video"}
+                        onChange={() => setUploadType("video")}
+                      />
+                      Video
+                    </label>
+                  </div>
+
+                  {uploadType === "image" ? (
+                    <>
+                      <input
+                        type="file"
+                        name="image"
+                        onChange={handleChange}
+                        accept="image/*"
+                        className="w-full border p-2 rounded"
+                      />
+                      {imageError && (
+                        <p className="text-red-600 text-sm mt-1">{imageError}</p>
+                      )}
+                      {formData.image && typeof formData.image === "object" && (
+                        <img
+                          src={URL.createObjectURL(formData.image)}
+                          alt="Preview"
+                          className="w-full h-32 object-cover mt-2 rounded"
+                        />
+                      )}
+                      {formData.image && typeof formData.image === "string" && (
+                        <img
+                          src={formData.image}
+                          alt="Existing"
+                          className="w-full h-32 object-cover mt-2 rounded"
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type="file"
+                        name="video"
+                        onChange={handleChange}
+                        accept="video/*"
+                        className="w-full border p-2 rounded"
+                      />
+                      {formData.video && typeof formData.video === "object" && (
+                        <video
+                          src={URL.createObjectURL(formData.video)}
+                          controls
+                          className="w-full h-32 object-cover mt-2 rounded"
+                        />
+                      )}
+                      {formData.video && typeof formData.video === "string" && (
+                        <video
+                          src={formData.video}
+                          controls
+                          className="w-full h-32 object-cover mt-2 rounded"
+                        />
+                      )}
+                    </>
                   )}
                 </>
               ) : (
@@ -247,12 +322,13 @@ const ManageProperty = () => {
           ))}
         </div>
 
-        <button
+        <LoadingButton
+          isLoading={submitLoading}
           type="submit"
           className="mt-4 bg-[#005550] text-white px-6 py-2 rounded hover:bg-yellow-500 transition duration-300"
         >
           {editId ? "Update Property" : "Add Property"}
-        </button>
+        </LoadingButton>
       </form>
 
       {/* Property Cards */}
@@ -266,11 +342,21 @@ const ManageProperty = () => {
               <p key={field} className="text-sm text-gray-800 mb-1">
                 <strong className="text-[#005550]">{fieldLabels[field]}:</strong>{" "}
                 {field === "image" ? (
-                  <img
-                    src={property.image}
-                    alt="Property"
-                    className="h-20 mt-2 rounded shadow"
-                  />
+                  property.image ? (
+                    <img
+                      src={property.image}
+                      alt="Property"
+                      className="h-20 mt-2 rounded shadow"
+                    />
+                  ) : property.video ? (
+                    <video
+                      src={property.video}
+                      controls
+                      className="h-20 mt-2 rounded shadow"
+                    />
+                  ) : (
+                    "N/A"
+                  )
                 ) : booleanFields.includes(field) ? (
                   property[field] ? "Yes" : "No"
                 ) : (
@@ -279,18 +365,20 @@ const ManageProperty = () => {
               </p>
             ))}
             <div className="mt-3 flex gap-3">
-              <button
+              <LoadingButton
+                isLoading={editLoading === property.id}
                 onClick={() => handleEdit(property)}
                 className="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-600 transition"
               >
                 Edit
-              </button>
-              <button
+              </LoadingButton>
+              <LoadingButton
+                isLoading={deleteLoading === property.id}
                 onClick={() => handleDelete(property.id)}
                 className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700 transition"
               >
                 Delete
-              </button>
+              </LoadingButton>
             </div>
           </div>
         ))}
