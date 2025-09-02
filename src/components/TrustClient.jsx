@@ -99,7 +99,7 @@ export default function TrustClient() {
               ))}
             </div>
             <div>
-              <h4 className="font-semibold text-[#145A32]">1M+ Clients</h4>
+              <h4 className="font-semibold text-[#145A32]">100k+ Clients</h4>
               <p className="text-sm text-gray-600">across India & overseas</p>
             </div>
           </div>
