@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaCheckCircle } from 'react-icons/fa';
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // ✅ use navigate like in BlogList
 
-import mem1 from '../assets/mem1.png';
-import mem2 from '../assets/mem2.png';
-import mem3 from '../assets/mem3.png';
-import mem4 from '../assets/mem4.png';
-import Trust from '../assets/Trust.png';
-import LoadingButton from '../components/LoadingButton'; 
+import mem1 from "../assets/mem1.png";
+import mem2 from "../assets/mem2.png";
+import mem3 from "../assets/mem3.png";
+import mem4 from "../assets/mem4.png";
+import Trust from "../assets/Trust.png";
+import LoadingButton from "../components/LoadingButton";
 
 const memberImages = [mem1, mem2, mem3, mem4];
 
@@ -15,48 +16,50 @@ const reviews = [
   {
     image: mem1,
     rating: 4.8,
-    message: 'SR Group helped me find my dream home in just 3 days. Excellent service!',
+    message:
+      "SR Group helped me find my dream home in just 3 days. Excellent service!",
   },
   {
     image: mem2,
     rating: 4.6,
-    message: 'I sold my apartment with SR Group – smooth and transparent experience.',
+    message:
+      "I sold my apartment with SR Group – smooth and transparent experience.",
   },
   {
     image: mem3,
     rating: 4.9,
-    message: 'Rented my 2BHK through SR Group. Very professional team!',
+    message: "Rented my 2BHK through SR Group. Very professional team!",
   },
   {
     image: mem4,
     rating: 4.7,
-    message: 'Great experience buying a plot through SR Group. Hassle-free process.',
+    message: "Great experience buying a plot through SR Group. Hassle-free process.",
   },
 ];
 
 export default function TrustClient() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false); // ✅ Spinner state
+  const [buttonLoading, setButtonLoading] = useState(false); // ✅ same as BlogList
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    }, 3000);
+    const interval = setInterval(
+      () => setCurrentIndex((prev) => (prev + 1) % reviews.length),
+      3000
+    );
     return () => clearInterval(interval);
   }, []);
 
-  const handleClick = () => {
-    setIsLoading(true);
+  const handleContactClick = () => {
+    setButtonLoading(true);
     setTimeout(() => {
-      setIsLoading(false);
-      window.location.href = "/contact-us";
+      navigate("/contact-us"); // ✅ smooth navigation like BlogList
     }, 800);
   };
 
   return (
     <section className="py-12 px-6 md:px-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
-
         {/* LEFT CONTENT */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,17 +76,18 @@ export default function TrustClient() {
           </h2>
 
           <p className="text-[#222] text-lg leading-relaxed mb-6">
-            Welcome to <strong>SR Group</strong> — your trusted partner for buying, selling, and renting properties.
-            From apartments to plots, we simplify your real estate journey with expert support.
+            Welcome to <strong>SR Group</strong> — your trusted partner for buying,
+            selling, and renting properties. From apartments to plots, we simplify
+            your real estate journey with expert support.
           </p>
 
-          {/* ✅ Updated button with spinner */}
+          {/* ✅ Contact Button with spinner */}
           <LoadingButton
-            isLoading={isLoading}
-            onClick={handleClick}
+            isLoading={buttonLoading}
+            onClick={handleContactClick}
             className="bg-[#145A32] text-white text-lg font-semibold px-6 py-3 rounded-xl hover:bg-[#0e4024] transition"
           >
-            Contact Us
+            Contact Us →
           </LoadingButton>
 
           {/* MEMBERS BLOCK */}
@@ -106,7 +110,9 @@ export default function TrustClient() {
 
           {/* REVIEW SLIDER */}
           <div className="mt-6">
-            <h3 className="text-[#145A32] font-semibold mb-3">What Our Clients Say</h3>
+            <h3 className="text-[#145A32] font-semibold mb-3">
+              What Our Clients Say
+            </h3>
             <ReviewCard {...reviews[currentIndex]} />
           </div>
         </motion.div>
@@ -118,11 +124,7 @@ export default function TrustClient() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-center"
         >
-          <img
-            src={Trust}
-            alt="Real Estate Client"
-            className="w-full max-w-md mx-auto"
-          />
+          <img src={Trust} alt="Real Estate Client" className="w-full max-w-md mx-auto" />
         </motion.div>
       </div>
     </section>
