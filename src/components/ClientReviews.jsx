@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import { BASE_URL, IMAGE_URL } from '../baseurl';
+import { BASE_URL } from '../baseurl';
 
 
 export default function ClientReviews() {
