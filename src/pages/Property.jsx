@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import Popup from "../components/Popup";
 import { BASE_URL } from '../baseurl';
+import { Helmet } from "react-helmet-async";
 
 export default function Property() {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -48,6 +49,21 @@ export default function Property() {
 
   return (
     <section className="w-full py-16 px-4 bg-[#f9f9f9]">
+       {/* ✅ SEO Helmet */}
+      <Helmet>
+        <title>Land Properties for Sale | SR Group</title>
+        <meta
+          name="description"
+          content="Explore premium land properties for sale with SR Group. Prime locations, developed areas, and essential amenities in Noida & nearby regions."
+        />
+        <meta property="og:title" content="Land Properties for Sale | SR Group" />
+        <meta
+          property="og:description"
+          content="Browse land listings with area, road distance, metro connectivity, and all essential amenities."
+        />
+        <meta property="og:image" content="https://thesgroupofficial.in/SR_logo.png" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#145A32] mb-2">Land Properties for Sale</h1>

@@ -1,30 +1,49 @@
-import { motion } from 'framer-motion';
-import { FaKey, FaChartLine, FaBalanceScale, FaTools, FaHandshake, FaBuilding } from 'react-icons/fa';
+import { motion } from "framer-motion";
+import {
+  FaKey,
+  FaChartLine,
+  FaBalanceScale,
+  FaTools,
+  FaHandshake,
+  FaBuilding,
+} from "react-icons/fa";
 
 const services = [
   {
-    icon: <FaBuilding size={24} />, title: "Property Sales",
-    description: "Expertly promoting and selling your property to attract qualified buyers."
+    icon: <FaBuilding size={24} />,
+    title: "Property Sales",
+    description:
+      "Expertly promoting and selling your property to attract qualified buyers.",
   },
   {
-    icon: <FaHandshake size={24} />, title: "Buyer Representation",
-    description: "Guiding you through the home-buying process, prioritizing your interests."
+    icon: <FaHandshake size={24} />,
+    title: "Buyer Representation",
+    description:
+      "Guiding you through the home-buying process, prioritizing your interests.",
   },
   {
-    icon: <FaKey size={24} />, title: "Rental Management",
-    description: "Managing tenant relations, maintenance, and finances to maximize rental returns."
+    icon: <FaKey size={24} />,
+    title: "Rental Management",
+    description:
+      "Managing tenant relations, maintenance, and finances to maximize rental returns.",
   },
   {
-    icon: <FaChartLine size={24} />, title: "Investment Consulting",
-    description: "Providing strategic advice to help you capitalize on real estate opportunities."
+    icon: <FaChartLine size={24} />,
+    title: "Investment Consulting",
+    description:
+      "Providing strategic advice to help you capitalize on real estate opportunities.",
   },
   {
-    icon: <FaBalanceScale size={24} />, title: "Property Valuation",
-    description: "Accurately assessing your property’s value for sales, purchases, or investments."
+    icon: <FaBalanceScale size={24} />,
+    title: "Property Valuation",
+    description:
+      "Accurately assessing your property’s value for sales, purchases, or investments.",
   },
   {
-    icon: <FaTools size={24} />, title: "Tailored Solutions",
-    description: "Delivering customized real estate services aligned with your specific goals."
+    icon: <FaTools size={24} />,
+    title: "Tailored Solutions",
+    description:
+      "Delivering customized real estate services aligned with your specific goals.",
   },
 ];
 
@@ -40,7 +59,9 @@ export default function ChooseUs() {
         >
           Why Choose Us
         </motion.h2>
-        <p className="text-gray-700 mt-2 text-lg">Explore Our Range of Expert Real Estate Services</p>
+        <p className="text-gray-700 mt-2 text-lg">
+          Explore Our Range of Expert Real Estate Services
+        </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service, index) => (

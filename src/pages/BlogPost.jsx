@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { BASE_URL } from '../baseurl';
 import axios from "axios";
@@ -22,6 +23,18 @@ export default function BlogPost() {
 
   return (
     <section className="px-4 md:px-24 py-16 bg-white">
+      <Helmet>
+        <title>{post.title} | SR Group Blogs</title>
+        <meta name="description" content={post.summary || post.content.slice(0, 150)} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.summary || post.content.slice(0, 150)} />
+        <meta property="og:image" content={post.image} />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.summary || post.content.slice(0, 150)} />
+        <meta name="twitter:image" content={post.image} />
+      </Helmet>
       <img
         src={post.image}
         alt={post.title}

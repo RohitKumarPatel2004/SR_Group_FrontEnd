@@ -34,7 +34,9 @@ export default function Navbar() {
                 to={item.path}
                 className={({ isActive }) =>
                   `relative group transition font-medium ${
-                    isActive ? "text-green-600" : "text-black hover:text-green-600"
+                    isActive
+                      ? "text-green-600"
+                      : "text-black hover:text-green-600"
                   }`
                 }
               >
@@ -81,7 +83,9 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `transition-colors duration-300 ${
-                  isActive ? "text-green-600" : "text-gray-700 hover:text-green-600"
+                  isActive
+                    ? "text-green-600"
+                    : "text-gray-700 hover:text-green-600"
                 }`
               }
             >
@@ -92,7 +96,9 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `transition-colors duration-300 ${
-                  isActive ? "text-green-600" : "text-gray-700 hover:text-green-600"
+                  isActive
+                    ? "text-green-600"
+                    : "text-gray-700 hover:text-green-600"
                 }`
               }
             >
@@ -103,7 +109,9 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `transition-colors duration-300 ${
-                  isActive ? "text-green-600" : "text-gray-700 hover:text-green-600"
+                  isActive
+                    ? "text-green-600"
+                    : "text-gray-700 hover:text-green-600"
                 }`
               }
             >
@@ -114,7 +122,9 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `transition-colors duration-300 ${
-                  isActive ? "text-green-600" : "text-gray-700 hover:text-green-600"
+                  isActive
+                    ? "text-green-600"
+                    : "text-gray-700 hover:text-green-600"
                 }`
               }
             >

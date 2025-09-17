@@ -1,10 +1,36 @@
 import React from "react";
 import owner from "../assets/ownerphoto.jpg";
-import farmland from "../assets/aboutbanner.jpg"; // farmland image
+import farmland from "../assets/aboutbanner.jpg"; 
+import { Helmet } from "react-helmet-async";
 
 export default function AboutUs() {
   return (
     <div className="bg-white text-gray-800">
+       {/* 🔹 SEO Meta Tags */}
+      <Helmet>
+        <title>About Us | SR Group</title>
+        <meta 
+          name="description" 
+          content="Learn more about SR Group, a leading real estate company founded by Mr. Rajesh Gautam. Discover our vision, mission, services, and achievements in building trust and delivering premium properties." 
+        />
+        <meta 
+          name="keywords" 
+          content="SR Group, About SR Group, Rajesh Gautam, real estate company, property dealer, Noida, residential plots, commercial spaces, rental properties" 
+        />
+
+        {/* Open Graph (Facebook, LinkedIn, WhatsApp previews) */}
+        <meta property="og:title" content="About Us | SR Group" />
+        <meta property="og:description" content="SR Group is a trusted name in real estate founded by Rajesh Gautam. Explore our vision, mission, services, and achievements." />
+        <meta property="og:url" content="https://thesgroupofficial.in/about" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://thesgroupofficial.in/SR_logo.png" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Us | SR Group" />
+        <meta name="twitter:description" content="Discover SR Group, a trusted real estate company led by Rajesh Gautam. Learn about our services and achievements." />
+        <meta name="twitter:image" content="https://thesgroupofficial.in/SR_logo.png" />
+      </Helmet>
       {/* Hero Section */}
       <section
         className="relative bg-cover bg-center text-white py-28 px-8 md:px-20"
@@ -73,9 +99,12 @@ export default function AboutUs() {
         </p>
       </div>
 
-      <button className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition">
-        Contact Founder →
-      </button>
+      <a href="tel:+919667546390">
+  <button className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition">
+    Contact Founder →
+  </button>
+</a>
+
     </div>
   </div>
 </section>
@@ -164,19 +193,19 @@ export default function AboutUs() {
         </h2>
         <div className="grid md:grid-cols-4 gap-6">
           <div className="p-6 bg-white rounded-2xl shadow">
-            <h3 className="text-3xl font-bold text-green-700">7+</h3>
+            <h3 className="text-3xl font-bold text-green-700">15+</h3>
             <p>Years of Experience</p>
           </div>
           <div className="p-6 bg-white rounded-2xl shadow">
-            <h3 className="text-3xl font-bold text-green-700">350+</h3>
+            <h3 className="text-3xl font-bold text-green-700">1500+</h3>
             <p>Properties Delivered</p>
           </div>
           <div className="p-6 bg-white rounded-2xl shadow">
-            <h3 className="text-3xl font-bold text-green-700">900+</h3>
+            <h3 className="text-3xl font-bold text-green-700">1500+</h3>
             <p>Satisfied Clients</p>
           </div>
           <div className="p-6 bg-white rounded-2xl shadow">
-            <h3 className="text-3xl font-bold text-green-700">75+</h3>
+            <h3 className="text-3xl font-bold text-green-700">8+</h3>
             <p>Ongoing Projects</p>
           </div>
         </div>

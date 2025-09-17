@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { BASE_URL } from '../baseurl';
+import { BASE_URL } from "../baseurl";
 
 export default function ContactQuoteSection() {
   const [name, setName] = useState("");
@@ -9,13 +9,13 @@ export default function ContactQuoteSection() {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // ✅ loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    setIsLoading(true); // ✅ start loading
+    setIsLoading(true);
 
     try {
       const res = await fetch(`${BASE_URL}/support`, {
@@ -37,7 +37,7 @@ export default function ContactQuoteSection() {
     } catch (err) {
       setError("Server error. Please try again later.");
     } finally {
-      setIsLoading(false); // ✅ stop loading
+      setIsLoading(false);
     }
   };
 
@@ -50,7 +50,8 @@ export default function ContactQuoteSection() {
         className="md:w-1/2 text-center md:text-left"
       >
         <blockquote className="text-[#145A32] text-3xl md:text-4xl font-bold leading-snug">
-          “The right time to buy property<br className="hidden md:block" /> is always now.”
+          “The right time to buy property
+          <br className="hidden md:block" /> is always now.”
         </blockquote>
         <p className="mt-4 text-lg text-[#145A32] font-medium">— SR Group</p>
       </motion.div>
@@ -83,7 +84,9 @@ export default function ContactQuoteSection() {
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-[#145A32]">Name *</label>
+            <label className="block text-sm font-medium text-[#145A32]">
+              Name *
+            </label>
             <input
               type="text"
               required
@@ -94,7 +97,9 @@ export default function ContactQuoteSection() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#145A32]">Phone Number *</label>
+            <label className="block text-sm font-medium text-[#145A32]">
+              Phone Number *
+            </label>
             <input
               type="tel"
               required
@@ -105,7 +110,9 @@ export default function ContactQuoteSection() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#145A32]">Gmail *</label>
+            <label className="block text-sm font-medium text-[#145A32]">
+              Gmail *
+            </label>
             <input
               type="email"
               required
@@ -116,7 +123,9 @@ export default function ContactQuoteSection() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#145A32]">Message *</label>
+            <label className="block text-sm font-medium text-[#145A32]">
+              Message *
+            </label>
             <textarea
               required
               value={message}
@@ -132,13 +141,29 @@ export default function ContactQuoteSection() {
             type="submit"
             disabled={isLoading}
             className={`w-full flex items-center justify-center bg-[#145A32] text-white py-3 rounded-full font-semibold text-lg shadow-md transition ${
-              isLoading ? 'opacity-80 cursor-not-allowed' : 'hover:bg-[#0e4024]'
+              isLoading ? "opacity-80 cursor-not-allowed" : "hover:bg-[#0e4024]"
             }`}
           >
             {isLoading ? (
-              <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
               </svg>
             ) : null}
             {isLoading ? "Submitting..." : "Submit"}

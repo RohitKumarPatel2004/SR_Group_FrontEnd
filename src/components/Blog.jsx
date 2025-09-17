@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, IMAGE_URL } from "../baseurl";
-import LoadingButton from "../components/LoadingButton"; // make sure path is correct
+import LoadingButton from "../components/LoadingButton";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -86,7 +86,8 @@ const BlogList = () => {
                       {blog.title}
                     </h3>
                     <p className="text-sm text-gray-700">
-                      {blog.content?.trim().split(" ").slice(0, 20).join(" ")}...
+                      {blog.content?.trim().split(" ").slice(0, 20).join(" ")}
+                      ...
                     </p>
                     <Link
                       to={`/blog/${blog.slug}`}

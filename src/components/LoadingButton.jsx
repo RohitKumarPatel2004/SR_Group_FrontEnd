@@ -1,11 +1,16 @@
-import React from 'react';
+import React from "react";
 
-export default function LoadingButton({ isLoading, children, className = '', ...props }) {
+export default function LoadingButton({
+  isLoading,
+  children,
+  className = "",
+  ...props
+}) {
   return (
     <button
       disabled={isLoading}
       className={`relative flex items-center justify-center px-4 py-2 rounded-md transition duration-200 ease-in-out
-                  ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}
+                  ${isLoading ? "opacity-70 cursor-not-allowed" : ""}
                   ${className}`}
       {...props}
     >
@@ -31,25 +36,7 @@ export default function LoadingButton({ isLoading, children, className = '', ...
           ></path>
         </svg>
       )}
-      <span className={`${isLoading ? 'ml-3' : ''}`}>{children}</span>
+      <span className={`${isLoading ? "ml-3" : ""}`}>{children}</span>
     </button>
   );
 }
-
-
-// import LoadingButton from '../components/LoadingButton'; 
-//   const [isLoading, setIsLoading] = useState(false); // ✅ Spinner state
-//  const handleClick = () => {
-//     setIsLoading(true);
-//     setTimeout(() => {
-//       setIsLoading(false);
-//       window.location.href = "/contact-us";
-//     }, 800);
-//   };
-//    <LoadingButton
-//             isLoading={isLoading}
-//             onClick={handleClick}
-//             className="bg-[#145A32] text-white text-lg font-semibold px-6 py-3 rounded-xl hover:bg-[#0e4024] transition"
-//           >
-//             Contact Us
-//           </LoadingButton>

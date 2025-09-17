@@ -3,8 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import { BASE_URL } from '../baseurl';
-
+import { BASE_URL } from "../baseurl";
 
 export default function ClientReviews() {
   const [reviews, setReviews] = useState([]);
@@ -28,7 +27,9 @@ export default function ClientReviews() {
               <div className="w-10 h-10 bg-[#145A32] rounded-md"></div>
               <div className="w-5 h-5 bg-[#145A32] rounded-md absolute -top-2 -right-2"></div>
             </div>
-            <h2 className="text-4xl font-semibold text-[#145A32] ml-4">Clients Testimonials</h2>
+            <h2 className="text-4xl font-semibold text-[#145A32] ml-4">
+              Clients Testimonials
+            </h2>
           </div>
           <p className="text-lg text-black font-medium mb-3">
             How Our Real Estate Agents Deliver Excellence!

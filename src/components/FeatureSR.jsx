@@ -3,10 +3,7 @@ import advertise from "../assets/advertise.png";
 import forrent from "../assets/forrent.png";
 import forsale from "../assets/forsale.png";
 import { useState } from "react";
-import Popup from './Popup';
-
-
-
+import Popup from "./Popup";
 
 const features = [
   {
@@ -33,8 +30,7 @@ const features = [
 ];
 
 export default function FeatureSR() {
-  
-const [popupOpen, setPopupOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
   return (
     <section className="bg-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -57,11 +53,13 @@ const [popupOpen, setPopupOpen] = useState(false);
                 {item.title}
               </h3>
               <p className="text-gray-800 mb-4">{item.description}</p>
-              <button onClick={() => setPopupOpen(true)} className="mt-2 bg-[#145A32] text-white px-4 py-2 rounded hover:bg-green-800">
+              <button
+                onClick={() => setPopupOpen(true)}
+                className="mt-2 bg-[#145A32] text-white px-4 py-2 rounded hover:bg-green-800"
+              >
                 {item.buttonText}
               </button>
             </div>
-            
           ))}
         </div>
       </div>

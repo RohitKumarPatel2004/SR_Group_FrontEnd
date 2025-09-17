@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { BASE_URL } from '../baseurl';
 import LoadingButton from '../components/LoadingButton'; 
+import { Helmet } from "react-helmet-async";
 
 import { useState } from "react";
 
@@ -51,6 +52,29 @@ export default function ContactUs() {
 
   return (
     <section className="bg-white">
+      {/* 🔹 SEO */}
+      <Helmet>
+        <title>Contact SR Group | Real Estate Experts</title>
+        <meta 
+          name="description" 
+          content="Get in touch with SR Group. Call, email, or visit us at our Noida Sector 49 & Saini Sonpura offices. Your trusted real estate partner in Uttar Pradesh." 
+        />
+        <meta name="keywords" content="SR Group contact, real estate Noida, property support, SR Group office" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Contact SR Group" />
+        <meta property="og:description" content="Connect with SR Group – Call, email, or visit our offices. Trusted property experts in Uttar Pradesh." />
+        <meta property="og:url" content="https://thesgroupofficial.in/contact" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://thesgroupofficial.in/SR_logo.png" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact SR Group" />
+        <meta name="twitter:description" content="Get in touch with SR Group – Your trusted real estate partner." />
+        <meta name="twitter:image" content="https://thesgroupofficial.in/SR_logo.png" />
+      </Helmet>
+
       {/* HEADER */}
       <div className="bg-[#145A32] text-white text-center py-12">
         <h1 className="text-4xl font-bold">Contact Us</h1>
@@ -179,7 +203,7 @@ export default function ContactUs() {
           <h4 className="text-xl font-semibold text-[#145A32] mb-4">📍 Noida Sector 49 Office</h4>
           <iframe
             title="Noida Office"
-            src="https://www.google.com/maps?q=Noida+Sector+49,+UP&output=embed"
+            src="https://www.google.com/maps?q=28.557568,77.378179&hl=en&z=17&output=embed"
             width="100%"
             height="300"
             allowFullScreen=""
@@ -192,7 +216,7 @@ export default function ContactUs() {
           <h4 className="text-xl font-semibold text-[#145A32] mb-4">📍 Saini Sonpura Office</h4>
           <iframe
             title="Saini Sonpura Office"
-            src="https://www.google.com/maps?q=Saini+Sonpura,+UP&output=embed"
+            src="https://www.google.com/maps?q=28.562833,77.491444&hl=en&z=17&output=embed"
             width="100%"
             height="300"
             allowFullScreen=""

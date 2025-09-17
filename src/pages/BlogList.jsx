@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BASE_URL } from '../baseurl';
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 export default function BlogList() {
   const [blogs, setBlogs] = useState([]);
@@ -14,6 +15,13 @@ export default function BlogList() {
 
   return (
     <section className="bg-[#f9f9f9] py-16 px-4 md:px-24">
+       <Helmet>
+        <title>All Blogs | SR Group</title>
+        <meta name="description" content="Explore latest articles on property buying, renting, and investment tips from SR Group." />
+        <meta property="og:title" content="SR Group Blogs" />
+        <meta property="og:description" content="Explore real estate blogs about property buying, selling, renting & investment tips." />
+        <meta property="og:image" content="/SR_logo.png" />
+      </Helmet>
       <div className="text-center mb-10">
         <h2 className="text-3xl font-semibold text-[#145A32]">All Blog Posts</h2>
         <p className="text-gray-600 mt-2">Explore our latest articles on property buying, renting & investments</p>

@@ -1,20 +1,19 @@
-// src/components/FAQ.jsx
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { MdOutlineQuestionAnswer } from 'react-icons/md';
-import { BASE_URL  } from '../baseurl';
-
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { MdOutlineQuestionAnswer } from "react-icons/md";
+import { BASE_URL } from "../baseurl";
 
 export default function FAQ() {
   const [faqs, setFaqs] = useState([]);
   const [openIndex, setOpenIndex] = useState(null);
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/faq/all`)
+    axios
+      .get(`${BASE_URL}/faq/all`)
       .then((res) => setFaqs(res.data))
       .catch((err) => {
-        console.error('Error fetching FAQs:', err);
+        console.error("Error fetching FAQs:", err);
       });
   }, []);
 
@@ -28,7 +27,9 @@ export default function FAQ() {
         <h2 className="text-3xl md:text-4xl font-bold text-[#145A32]">
           Frequently Asked Questions (FAQs)
         </h2>
-        <p className="text-gray-600 mt-2">Quick answers to your real estate queries</p>
+        <p className="text-gray-600 mt-2">
+          Quick answers to your real estate queries
+        </p>
         <div className="h-1 w-20 bg-[#145A32] mx-auto mt-3 rounded-full"></div>
       </div>
 

@@ -14,9 +14,15 @@ export default function Footer() {
             Buy, Sell & Rent Properties with Confidence.
           </p>
           <div className="flex gap-3">
-            <a href="#" className="hover:scale-110 transition text-[#145A32]">
+            <a
+              href="https://www.facebook.com/share/1EWxvCj6k2/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:scale-110 transition text-[#145A32]"
+            >
               <FaFacebookF size={20} />
             </a>
+
             <a href="#" className="hover:scale-110 transition text-[#145A32]">
               <FaInstagram size={20} />
             </a>
