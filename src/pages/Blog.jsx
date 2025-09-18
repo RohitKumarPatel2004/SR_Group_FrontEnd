@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { BASE_URL } from '../baseurl';
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 export default function Blog() {
   const [blogs, setBlogs] = useState([]);
@@ -20,6 +21,37 @@ export default function Blog() {
   return (
     <section className="w-full bg-white">
       {/* 🏡 Hero Section */}
+
+      <Helmet>
+  {/* Dynamic Title & Description */}
+  <title>{post.title} | SR Group Blogs</title>
+  <meta 
+    name="description" 
+    content={post.summary || post.content.slice(0, 150)} 
+  />
+  <meta 
+    name="keywords" 
+    content={`SR Group Blog, ${post.title}, Real Estate Tips, Property Investment, ${post.slug}`} 
+  />
+
+  {/* Open Graph (FB, LinkedIn, WhatsApp) */}
+  <meta property="og:title" content={`${post.title} | SR Group Blogs`} />
+  <meta property="og:description" content={post.summary || post.content.slice(0, 150)} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={`https://thesrgroupofficial.in/blog/${post.slug}`} />
+  <meta property="og:image" content={post.image || "https://thesrgroupofficial.in/SR_logo.png"} />
+  <meta property="og:site_name" content="SR Group" />
+
+  {/* Canonical URL */}
+  <link rel="canonical" href={`https://thesrgroupofficial.in/blog/${post.slug}`} />
+
+  {/* Twitter Card */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`${post.title} | SR Group Blogs`} />
+  <meta name="twitter:description" content={post.summary || post.content.slice(0, 150)} />
+  <meta name="twitter:image" content={post.image || "https://thesrgroupofficial.in/SR_logo.png"} />
+</Helmet>
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

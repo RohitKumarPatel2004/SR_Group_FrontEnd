@@ -27,9 +27,10 @@ export default function Home() {
         {/* Open Graph (for better previews on Google, Facebook, LinkedIn) */}
         <meta property="og:title" content="THES Group Official Website" />
         <meta property="og:description" content="Explore THES Group's properties, services, blogs, and trusted client reviews." />
-        <meta property="og:url" content="https://thesgroupofficial.in/" />
+        <link rel="canonical" href="https://thesrgroupofficial.in/" />
+        <meta property="og:url" content="https://thesrgroupofficial.in/" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://thesgroupofficial.in/SR_logo.png
+        <meta property="og:image" content="https://thesrgroupofficial.in/SR_logo.png
 " /> 
         {/* apna logo ya hero image ka link yaha lagao */}
       </Helmet>

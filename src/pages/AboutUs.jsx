@@ -21,15 +21,16 @@ export default function AboutUs() {
         {/* Open Graph (Facebook, LinkedIn, WhatsApp previews) */}
         <meta property="og:title" content="About Us | SR Group" />
         <meta property="og:description" content="SR Group is a trusted name in real estate founded by Rajesh Gautam. Explore our vision, mission, services, and achievements." />
-        <meta property="og:url" content="https://thesgroupofficial.in/about" />
+        <link rel="canonical" href="https://thesrgroupofficial.in/about-us" />
+        <meta property="og:url" content="https://thesrgroupofficial.in/about-us" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://thesgroupofficial.in/SR_logo.png" />
+        <meta property="og:image" content="https://thesrgroupofficial.in/SR_logo.png" />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About Us | SR Group" />
         <meta name="twitter:description" content="Discover SR Group, a trusted real estate company led by Rajesh Gautam. Learn about our services and achievements." />
-        <meta name="twitter:image" content="https://thesgroupofficial.in/SR_logo.png" />
+        <meta name="twitter:image" content="https://thesrgroupofficial.in/SR_logo.png" />
       </Helmet>
       {/* Hero Section */}
       <section

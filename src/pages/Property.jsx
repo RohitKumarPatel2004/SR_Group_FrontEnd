@@ -61,7 +61,8 @@ export default function Property() {
           property="og:description"
           content="Browse land listings with area, road distance, metro connectivity, and all essential amenities."
         />
-        <meta property="og:image" content="https://thesgroupofficial.in/SR_logo.png" />
+        <link rel="canonical" href="https://thesrgroupofficial.in/property" />
+        <meta property="og:image" content="https://thesrgroupofficial.in/SR_logo.png" />
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="max-w-7xl mx-auto">

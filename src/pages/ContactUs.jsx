@@ -62,17 +62,19 @@ export default function ContactUs() {
         <meta name="keywords" content="SR Group contact, real estate Noida, property support, SR Group office" />
 
         {/* Open Graph */}
+        <link rel="canonical" href="https://thesrgroupofficial.in/contact-us" />
+
         <meta property="og:title" content="Contact SR Group" />
         <meta property="og:description" content="Connect with SR Group – Call, email, or visit our offices. Trusted property experts in Uttar Pradesh." />
-        <meta property="og:url" content="https://thesgroupofficial.in/contact" />
+        <meta property="og:url" content="https://thesrgroupofficial.in/contact-us" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://thesgroupofficial.in/SR_logo.png" />
+        <meta property="og:image" content="https://thesrgroupofficial.in/SR_logo.png" />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Contact SR Group" />
         <meta name="twitter:description" content="Get in touch with SR Group – Your trusted real estate partner." />
-        <meta name="twitter:image" content="https://thesgroupofficial.in/SR_logo.png" />
+        <meta name="twitter:image" content="https://thesrgroupofficial.in/SR_logo.png" />
       </Helmet>
 
       {/* HEADER */}
