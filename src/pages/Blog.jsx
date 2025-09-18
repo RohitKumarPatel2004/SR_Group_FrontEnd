@@ -22,35 +22,35 @@ export default function Blog() {
     <section className="w-full bg-white">
       {/* 🏡 Hero Section */}
 
-      <Helmet>
-  {/* Dynamic Title & Description */}
-  <title>{post.title} | SR Group Blogs</title>
+   <Helmet>
+  <title>{recentBlog.title} | SR Group Blogs</title>
   <meta 
     name="description" 
-    content={post.summary || post.content.slice(0, 150)} 
+    content={recentBlog.summary || recentBlog.content.slice(0, 150)} 
   />
   <meta 
     name="keywords" 
-    content={`SR Group Blog, ${post.title}, Real Estate Tips, Property Investment, ${post.slug}`} 
+    content={`SR Group Blog, ${recentBlog.title}, Real Estate Tips, Property Investment, ${recentBlog.slug}`} 
   />
 
   {/* Open Graph (FB, LinkedIn, WhatsApp) */}
-  <meta property="og:title" content={`${post.title} | SR Group Blogs`} />
-  <meta property="og:description" content={post.summary || post.content.slice(0, 150)} />
+  <meta property="og:title" content={`${recentBlog.title} | SR Group Blogs`} />
+  <meta property="og:description" content={recentBlog.summary || recentBlog.content.slice(0, 150)} />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content={`https://thesrgroupofficial.in/blog/${post.slug}`} />
-  <meta property="og:image" content={post.image || "https://thesrgroupofficial.in/SR_logo.png"} />
+  <meta property="og:url" content={`https://thesrgroupofficial.in/blog/${recentBlog.slug}`} />
+  <meta property="og:image" content={recentBlog.image || "https://thesrgroupofficial.in/SR_logo.png"} />
   <meta property="og:site_name" content="SR Group" />
 
   {/* Canonical URL */}
-  <link rel="canonical" href={`https://thesrgroupofficial.in/blog/${post.slug}`} />
+  <link rel="canonical" href={`https://thesrgroupofficial.in/blog/${recentBlog.slug}`} />
 
   {/* Twitter Card */}
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={`${post.title} | SR Group Blogs`} />
-  <meta name="twitter:description" content={post.summary || post.content.slice(0, 150)} />
-  <meta name="twitter:image" content={post.image || "https://thesrgroupofficial.in/SR_logo.png"} />
+  <meta name="twitter:title" content={`${recentBlog.title} | SR Group Blogs`} />
+  <meta name="twitter:description" content={recentBlog.summary || recentBlog.content.slice(0, 150)} />
+  <meta name="twitter:image" content={recentBlog.image || "https://thesrgroupofficial.in/SR_logo.png"} />
 </Helmet>
+
 
       <motion.div
         initial={{ opacity: 0 }}
